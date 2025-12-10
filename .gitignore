@@ -1,0 +1,36 @@
+# 数据库数据文件
+Databases/mysql/
+Databases/mongodb/
+Databases/postgresql/
+Databases/redis/
+Databases/kafka/
+
+# 临时文件
+Temp/*
+
+# 私有文件
+Private/files/*
+Private/images/*
+
+# 存储文件
+Stores/*
+
+# 共享文件（根据需求调整）
+# Shared/*
+
+# Docker 相关
+.env
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
