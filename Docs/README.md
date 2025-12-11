@@ -49,7 +49,7 @@ create_bucket_on_start = true
 |------|--------------------|------------------|------|
 | MySQL | `mysql:3306` | `192.168.1.64:10013` (`MYSQL_DATABASE_PORT`) | 调整 `dbname`、`user` 后即可复用。 |
 | Redis | `redis:6379` | `192.168.1.64:10015` (`REDIS_DATABASE_PORT`) | 记得填写 `REDIS_PASSWORD`。 |
-| Kafka | `kafka:9092` | `192.168.1.64:10109` (`KAFKA_EXTERNAL_PORT`) | `resources_public` 集群。 |
+| Kafka | `kafka:9092` | `192.168.1.64:10109` (`KAFKA_EXTERNAL_PORT`) | `nfx_stack_public` 集群。 |
 | MongoDB | `mongodb:27017` | `192.168.1.64:10014` (`MONGO_DATABASE_PORT`) | 默认 `authSource = admin`。 |
 | MinIO S3 | `minio:9000` | `192.168.1.64:${MINIO_API_PORT}` | Console: `${MINIO_CONSOLE_PORT}`。 |
 

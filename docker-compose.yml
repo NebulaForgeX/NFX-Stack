@@ -192,7 +192,7 @@ services:
     environment:
       SERVER_SERVLET_CONTEXT_PATH: /
       DYNAMIC_CONFIG_ENABLED: "true"
-      KAFKA_CLUSTERS_0_NAME: resources_public
+      KAFKA_CLUSTERS_0_NAME: nfx_stack_public
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     networks:
       - nfx-stack

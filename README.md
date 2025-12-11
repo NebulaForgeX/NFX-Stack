@@ -77,7 +77,7 @@ docker compose down
 | phpMyAdmin (`mysql-ui`) | `http://192.168.1.64:${MYSQL_UI_PORT}` (default 10101) | MySQL root or business account (`MYSQL_ROOT_PASSWORD`) | Enter `mysql` (same network) or `192.168.1.64` as Server. |
 | Mongo Express (`mongodb-ui`) | `http://192.168.1.64:${MONGO_UI_PORT}` (default 10111) | Basic Auth (`ME_CONFIG_BASICAUTH_*`), then Mongo Root (`MONGO_ROOT_USERNAME/PASSWORD`) | You can change Basic Auth to prevent unauthorized access. |
 | RedisInsight (`redis-ui`) | `http://192.168.1.64:${REDIS_UI_PORT}` (default 10121) or `http://192.168.1.64:10027` | If `RI_USERNAME/RI_PASSWORD` is set, login first; when connecting to Redis, enter `redis:6379` or host port | First-time use requires creating a Workspace. |
-| Kafka UI (`kafka-ui`) | `http://192.168.1.64:${KAFKA_UI_PORT}` (default 10131) | Optional Basic Auth (custom) | Pre-configured cluster `resources_public` -> `kafka:9092`. |
+| Kafka UI (`kafka-ui`) | `http://192.168.1.64:${KAFKA_UI_PORT}` (default 10131) | Optional Basic Auth (custom) | Pre-configured cluster `nfx_stack_public` -> `kafka:9092`. |
 | MinIO Console (`minio`) | `http://192.168.1.64:${MINIO_CONSOLE_PORT}` (default 10141) | `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD` | S3 API: `http://192.168.1.64:${MINIO_API_PORT}`, see below for details. |
 
 ## Data Plane Ports
