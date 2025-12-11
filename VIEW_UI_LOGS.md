@@ -1,15 +1,15 @@
-# NebulaStack UI Logs Viewing Guide
+# NFX Stack UI Logs Viewing Guide
 
 ## UI Services List
 
-According to `docker-compose.yml`, the following UI services are available in the Resources directory:
+According to `docker-compose.yml`, the following UI services are available in the NFX-Stack directory:
 
-1. **MySQL UI** (phpMyAdmin) - Container: `Resources-MySQL-UI`
-2. **MongoDB UI** (mongo-express) - Container: `Resources-MongoDB-UI`
-3. **PostgreSQL UI** (pgAdmin) - Container: `Resources-PostgreSQL-UI`
-4. **Redis UI** (RedisInsight) - Container: `Resources-Redis-UI`
-5. **Kafka UI** - Container: `Resources-Kafka-UI`
-6. **MinIO** (Web Console) - Container: `Resources-MinIO`
+1. **MySQL UI** (phpMyAdmin) - Container: `NFX-Stack-MySQL-UI`
+2. **MongoDB UI** (mongo-express) - Container: `NFX-Stack-MongoDB-UI`
+3. **PostgreSQL UI** (pgAdmin) - Container: `NFX-Stack-PostgreSQL-UI`
+4. **Redis UI** (RedisInsight) - Container: `NFX-Stack-Redis-UI`
+5. **Kafka UI** - Container: `NFX-Stack-Kafka-UI`
+6. **MinIO** (Web Console) - Container: `NFX-Stack-MinIO`
 
 ## Methods to View Logs
 
@@ -19,88 +19,88 @@ According to `docker-compose.yml`, the following UI services are available in th
 
 ```bash
 # MySQL UI (phpMyAdmin)
-sudo docker logs Resources-MySQL-UI
+sudo docker logs NFX-Stack-MySQL-UI
 
 # MongoDB UI (mongo-express)
-sudo docker logs Resources-MongoDB-UI
+sudo docker logs NFX-Stack-MongoDB-UI
 
 # PostgreSQL UI (pgAdmin)
-sudo docker logs Resources-PostgreSQL-UI
+sudo docker logs NFX-Stack-PostgreSQL-UI
 
 # Redis UI (RedisInsight)
-sudo docker logs Resources-Redis-UI
+sudo docker logs NFX-Stack-Redis-UI
 
 # Kafka UI
-sudo docker logs Resources-Kafka-UI
+sudo docker logs NFX-Stack-Kafka-UI
 
 # MinIO (Web Console)
-sudo docker logs Resources-MinIO
+sudo docker logs NFX-Stack-MinIO
 ```
 
 #### Real-time Log Tracking (similar to tail -f)
 
 ```bash
 # Real-time MySQL UI logs
-sudo docker logs -f Resources-MySQL-UI
+sudo docker logs -f NFX-Stack-MySQL-UI
 
 # Real-time MongoDB UI logs
-sudo docker logs -f Resources-MongoDB-UI
+sudo docker logs -f NFX-Stack-MongoDB-UI
 
 # Real-time PostgreSQL UI logs
-sudo docker logs -f Resources-PostgreSQL-UI
+sudo docker logs -f NFX-Stack-PostgreSQL-UI
 
 # Real-time Redis UI logs
-sudo docker logs -f Resources-Redis-UI
+sudo docker logs -f NFX-Stack-Redis-UI
 
 # Real-time Kafka UI logs
-sudo docker logs -f Resources-Kafka-UI
+sudo docker logs -f NFX-Stack-Kafka-UI
 
 # Real-time MinIO logs
-sudo docker logs -f Resources-MinIO
+sudo docker logs -f NFX-Stack-MinIO
 ```
 
 #### View Recent Logs (Last N Lines)
 
 ```bash
 # View last 100 lines
-sudo docker logs --tail 100 Resources-MySQL-UI
+sudo docker logs --tail 100 NFX-Stack-MySQL-UI
 
 # View last 50 lines and follow in real-time
-sudo docker logs --tail 50 -f Resources-MongoDB-UI
+sudo docker logs --tail 50 -f NFX-Stack-MongoDB-UI
 ```
 
 #### View Logs with Timestamps
 
 ```bash
 # Display timestamps
-sudo docker logs -t Resources-PostgreSQL-UI
+sudo docker logs -t NFX-Stack-PostgreSQL-UI
 
 # Real-time tracking with timestamps
-sudo docker logs -f -t Resources-Redis-UI
+sudo docker logs -f -t NFX-Stack-Redis-UI
 ```
 
 #### View Logs for a Specific Time Range
 
 ```bash
 # View logs from last 10 minutes
-sudo docker logs --since 10m Resources-Kafka-UI
+sudo docker logs --since 10m NFX-Stack-Kafka-UI
 
 # View logs from last 1 hour
-sudo docker logs --since 1h Resources-MinIO
+sudo docker logs --since 1h NFX-Stack-MinIO
 
 # View logs from a specific time point
-sudo docker logs --since "2025-01-20T10:00:00" Resources-MySQL-UI
+sudo docker logs --since "2025-01-20T10:00:00" NFX-Stack-MySQL-UI
 
 # View logs within a specific time range
-sudo docker logs --since "2025-01-20T10:00:00" --until "2025-01-20T11:00:00" Resources-MongoDB-UI
+sudo docker logs --since "2025-01-20T10:00:00" --until "2025-01-20T11:00:00" NFX-Stack-MongoDB-UI
 ```
 
 ### Method 2: Using `sudo docker compose logs` Command (Recommended)
 
-Execute in the `/volume1/Resources` directory:
+Execute in the `/volume1/NFX-Stack` directory:
 
 ```bash
-cd /volume1/Resources
+cd /volume1/NFX-Stack
 
 # View logs for all UI services
 sudo docker compose logs mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
@@ -125,11 +125,11 @@ sudo docker compose logs -t mysql-ui
 ### Method 3: View All UI Service Logs (One-Click View)
 
 ```bash
-# View logs for all NebulaStack UI services
-sudo docker logs Resources-MySQL-UI Resources-MongoDB-UI Resources-PostgreSQL-UI Resources-Redis-UI Resources-Kafka-UI Resources-MinIO
+# View logs for all NFX Stack UI services
+sudo docker logs NFX-Stack-MySQL-UI NFX-Stack-MongoDB-UI NFX-Stack-PostgreSQL-UI NFX-Stack-Redis-UI NFX-Stack-Kafka-UI NFX-Stack-MinIO
 
 # Real-time tracking for all UI services
-sudo docker logs -f Resources-MySQL-UI Resources-MongoDB-UI Resources-PostgreSQL-UI Resources-Redis-UI Resources-Kafka-UI Resources-MinIO
+sudo docker logs -f NFX-Stack-MySQL-UI NFX-Stack-MongoDB-UI NFX-Stack-PostgreSQL-UI NFX-Stack-Redis-UI NFX-Stack-Kafka-UI NFX-Stack-MinIO
 ```
 
 ### Method 4: Using Script for Batch Viewing
@@ -139,7 +139,7 @@ Create a script file `view-ui-logs.sh`:
 ```bash
 #!/bin/bash
 
-echo "=== NebulaStack UI Service Log Viewer ==="
+echo "=== NFX Stack UI Service Log Viewer ==="
 echo ""
 echo "1. MySQL UI (phpMyAdmin)"
 echo "2. MongoDB UI (mongo-express)"
@@ -155,26 +155,26 @@ read -p "Please select a service (0-7): " choice
 
 case $choice in
     1)
-        sudo docker logs -f Resources-MySQL-UI
+        sudo docker logs -f NFX-Stack-MySQL-UI
         ;;
     2)
-        sudo docker logs -f Resources-MongoDB-UI
+        sudo docker logs -f NFX-Stack-MongoDB-UI
         ;;
     3)
-        sudo docker logs -f Resources-PostgreSQL-UI
+        sudo docker logs -f NFX-Stack-PostgreSQL-UI
         ;;
     4)
-        sudo docker logs -f Resources-Redis-UI
+        sudo docker logs -f NFX-Stack-Redis-UI
         ;;
     5)
-        sudo docker logs -f Resources-Kafka-UI
+        sudo docker logs -f NFX-Stack-Kafka-UI
         ;;
     6)
-        sudo docker logs -f Resources-MinIO
+        sudo docker logs -f NFX-Stack-MinIO
         ;;
     7)
         echo "Viewing all UI service logs..."
-        sudo docker logs -f Resources-MySQL-UI Resources-MongoDB-UI Resources-PostgreSQL-UI Resources-Redis-UI Resources-Kafka-UI Resources-MinIO
+        sudo docker logs -f NFX-Stack-MySQL-UI NFX-Stack-MongoDB-UI NFX-Stack-PostgreSQL-UI NFX-Stack-Redis-UI NFX-Stack-Kafka-UI NFX-Stack-MinIO
         ;;
     0)
         exit 0
@@ -192,32 +192,32 @@ esac
 
 ```bash
 # View logs containing "error"
-sudo docker logs Resources-MySQL-UI 2>&1 | grep -i error
+sudo docker logs NFX-Stack-MySQL-UI 2>&1 | grep -i error
 
 # View logs containing "error" or "warn"
-sudo docker logs Resources-MongoDB-UI 2>&1 | grep -iE "error|warn"
+sudo docker logs NFX-Stack-MongoDB-UI 2>&1 | grep -iE "error|warn"
 ```
 
 ### Export Logs to File
 
 ```bash
 # Export MySQL UI logs to file
-sudo docker logs Resources-MySQL-UI > mysql-ui.log 2>&1
+sudo docker logs NFX-Stack-MySQL-UI > mysql-ui.log 2>&1
 
 # Export all UI service logs
-sudo docker logs Resources-MySQL-UI > mysql-ui.log 2>&1
-sudo docker logs Resources-MongoDB-UI > mongodb-ui.log 2>&1
-sudo docker logs Resources-PostgreSQL-UI > postgresql-ui.log 2>&1
-sudo docker logs Resources-Redis-UI > redis-ui.log 2>&1
-sudo docker logs Resources-Kafka-UI > kafka-ui.log 2>&1
-sudo docker logs Resources-MinIO > minio.log 2>&1
+sudo docker logs NFX-Stack-MySQL-UI > mysql-ui.log 2>&1
+sudo docker logs NFX-Stack-MongoDB-UI > mongodb-ui.log 2>&1
+sudo docker logs NFX-Stack-PostgreSQL-UI > postgresql-ui.log 2>&1
+sudo docker logs NFX-Stack-Redis-UI > redis-ui.log 2>&1
+sudo docker logs NFX-Stack-Kafka-UI > kafka-ui.log 2>&1
+sudo docker logs NFX-Stack-MinIO > minio.log 2>&1
 ```
 
 ### View Container Status and Logs
 
 ```bash
 # First check container status
-sudo docker ps --filter "name=Resources" --format "table {{.Names}}\t{{.Status}}"
+sudo docker ps --filter "name=NFX-Stack" --format "table {{.Names}}\t{{.Status}}"
 
 # Then view logs for the corresponding container
 sudo docker logs -f <container-name>

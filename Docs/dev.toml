@@ -1,10 +1,10 @@
 [mysql]
-    # 当你的服务加入 resources 网络时可以直接用容器名 + 内部端口
+    # 当你的服务加入 nfx-stack 网络时可以直接用容器名 + 内部端口
     # 如果是在宿主机/本地开发访问，请改成 192.168.1.64:10013（Resources README 中有端口表）
     host = "mysql"
     port = 3306
     user = "root"
-    password = "<MYSQL_ROOT_PASSWORD>"       # 来自 Resources/.env
+    password = "<MYSQL_ROOT_PASSWORD>"       # 来自 NFX-Stack/.env
     dbname = "<MYSQL_DATABASE_NAME>"         # 每个项目自定义数据库名
     charset = "utf8mb4"
     parse_time = true

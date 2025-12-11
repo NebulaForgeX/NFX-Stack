@@ -1,16 +1,18 @@
-# NebulaStack
+# NFX Stack
+
+**NFX Stack = NebulaForgeX Resource Stack**
 
 **Unified Resource & Infrastructure Platform for Modern Development**
 
 <div align="center">
-  <img src="image.png" alt="NebulaStack Logo" width="200">
+  <img src="image.png" alt="NFX Stack Logo" width="200">
 </div>
 
-NebulaStack is the foundational infrastructure layer of the NebulaForgeX ecosystem.
+NFX Stack is the foundational infrastructure layer of the NebulaForgeX ecosystem.
 
 It provides a fully-modular, production-grade resource stack designed for rapid application development, local environment consistency, and cloud-ready microservice architectures.
 
-NebulaStack bundles and orchestrates all essential backend services—databases, messaging systems, caching layers, storage engines, and their management UIs—through a single, extensible Docker-based platform.
+NFX Stack bundles and orchestrates all essential backend services—databases, messaging systems, caching layers, storage engines, and their management UIs—through a single, extensible Docker-based platform.
 
 It empowers developers to spin up a complete, fully integrated environment in minutes, enabling seamless experimentation, prototyping, and scaling across all NebulaForgeX projects.
 
@@ -36,7 +38,7 @@ Follows patterns used by modern SaaS platforms: isolated networks, persistent vo
 
 ## Purpose
 
-NebulaStack acts as the backbone of all NebulaForgeX projects, providing:
+NFX Stack acts as the backbone of all NebulaForgeX projects, providing:
 
 - A shared development environment
 - A standardized resource stack across services
@@ -44,7 +46,7 @@ NebulaStack acts as the backbone of all NebulaForgeX projects, providing:
 - A single source of truth for data infrastructure
 - A launchpad for new microservices and experimental projects
 
-Whether you're building authentication, content pipelines, crawlers, marketplace systems, or AI-driven services, NebulaStack ensures your infrastructure is consistent, predictable, and ready.
+Whether you're building authentication, content pipelines, crawlers, marketplace systems, or AI-driven services, NFX Stack ensures your infrastructure is consistent, predictable, and ready.
 
 ---
 
@@ -53,7 +55,7 @@ Whether you're building authentication, content pipelines, crawlers, marketplace
 ## Quick Start
 
 ```bash
-cd /volume1/Resources
+cd /volume1/NFX-Stack
 
 # 1. Start services
 docker compose --env-file .env up -d
@@ -65,7 +67,7 @@ docker compose ps
 docker compose down
 ```
 
-- Default network: `resources`; business containers can join this network to access services by name (e.g., `mysql:3306`).
+- Default network: `nfx-stack`; business containers can join this network to access services by name (e.g., `mysql:3306`).
 - For physical machine/local access, use the host ports in the table below, and ensure the firewall allows access.
 
 ## UI & Management Dashboard Access
@@ -113,7 +115,7 @@ secure = false
 
 ## Configuration Templates / Docs Templates
 
-`Resources/Docs` provides `dev.toml`, `prod.toml`, covering sections like `[mysql]` `[cache]` `[kafka]` `[mongodb]` `[minio]`:
+`NFX-Stack/Docs` provides `dev.toml`, `prod.toml`, covering sections like `[mysql]` `[cache]` `[kafka]` `[mongodb]` `[minio]`:
 
 1. Copy to the `config/` or `configs/` directory of your new service.
 2. Replace `REPLACE_WITH_*` with project-specific databases / Topics / Buckets.

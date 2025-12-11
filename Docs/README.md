@@ -1,6 +1,6 @@
-# Resources Docs 使用说明 / How-To
+# NFX-Stack Docs 使用说明 / How-To
 
-`dev.toml`、`prod.toml` 是可以直接复制到新服务中的配置模板，覆盖 MySQL、Redis、Kafka、MongoDB、MinIO。所有默认值已经与 `Resources/.env` 对齐，只需替换凭证和业务专属名称即可。
+`dev.toml`、`prod.toml` 是可以直接复制到新服务中的配置模板，覆盖 MySQL、Redis、Kafka、MongoDB、MinIO。所有默认值已经与 `NFX-Stack/.env` 对齐，只需替换凭证和业务专属名称即可。
 
 ## 使用步骤 / Workflow
 
@@ -8,10 +8,10 @@
    放入项目的 `configs/` 或 `cmd/<service>/config/`。根据服务名称调整 `mysql.dbname`、Kafka Topic、MinIO Bucket。
 
 2. **更新凭证 Replace secrets**  
-   搜索 `<...>` / `REPLACE_WITH_*`，逐一填入 Resources `.env` 中维护的真实值（`MYSQL_ROOT_PASSWORD`、`REDIS_PASSWORD`、`MONGO_ROOT_PASSWORD`、`MINIO_ROOT_USER` 等）。需要独立账号时，先在公共实例创建再写入。
+   搜索 `<...>` / `REPLACE_WITH_*`，逐一填入 NFX-Stack `.env` 中维护的真实值（`MYSQL_ROOT_PASSWORD`、`REDIS_PASSWORD`、`MONGO_ROOT_PASSWORD`、`MINIO_ROOT_USER` 等）。需要独立账号时，先在公共实例创建再写入。
 
 3. **选择访问域 Choose endpoints**  
-   - **容器在 `resources` 网络**：保持 `host = "mysql"`、`endpoint = "http://minio:9000"` 等内部地址。  
+   - **容器在 `nfx-stack` 网络**：保持 `host = "mysql"`、`endpoint = "http://minio:9000"` 等内部地址。  
    - **NAS 以外 / 本地调试**：将 host/port 改成 `192.168.1.64:<EXTERNAL_PORT>`。README 主文档有完整端口表。
 
 4. **启用/禁用模块 Toggle modules**  
@@ -59,8 +59,8 @@ create_bucket_on_start = true
 
 - 为每个项目创建独立的数据库、Redis DB、Kafka Topic、MinIO Bucket。  
 - 将 TOML 纳入仓库时，敏感信息使用 `.env`、Vault、K8s Secret 注入。  
-- 变更 Resources 端口/凭证后，立即更新模板并通知项目组，避免配置漂移。  
-- 需要额外服务（SMTP、ElasticSearch 等）时，先在 `Resources/docker-compose.yml` 中声明，再扩展模板。
+- 变更 NFX-Stack 端口/凭证后，立即更新模板并通知项目组，避免配置漂移。  
+- 需要额外服务（SMTP、ElasticSearch 等）时，先在 `NFX-Stack/docker-compose.yml` 中声明，再扩展模板。
 
 复制 → 替换 → 运行，即可保证所有后端服务对齐同一套基础设施配置。Happy hacking!
 

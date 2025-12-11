@@ -2,7 +2,7 @@ services:
   #! MySQL 公共数据库
   mysql:
     image: mysql:8.0
-    container_name: Resources-MySQL
+    container_name: NFX-Stack-MySQL
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -11,19 +11,19 @@ services:
     ports:
       - "${MYSQL_DATABASE_PORT}:3306"
     volumes:
-      - ${MYSQL_DATA_PATH:-/volume1/Resources/Databases/mysql}:/var/lib/mysql
-      - ${MYSQL_INIT_PATH:-/volume1/Resources/Databases/mysql-init}:/docker-entrypoint-initdb.d
+      - ${MYSQL_DATA_PATH:-/volume1/NFX-Stack/Databases/mysql}:/var/lib/mysql
+      - ${MYSQL_INIT_PATH:-/volume1/NFX-Stack/Databases/mysql-init}:/docker-entrypoint-initdb.d
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --default-authentication-plugin=mysql_native_password
     networks:
-      - resources
+      - nfx-stack
 
   #! phpMyAdmin 管理 MySQL（公共资源）
   mysql-ui:
     image: phpmyadmin:latest
-    container_name: Resources-MySQL-UI
+    container_name: NFX-Stack-MySQL-UI
     restart: always
     expose:
       - "80"
@@ -36,12 +36,12 @@ services:
     depends_on:
       - mysql
     networks:
-      - resources
+      - nfx-stack
 
   #! MongoDB 公共实例
   mongodb:
     image: mongo:4.4
-    container_name: Resources-MongoDB
+    container_name: NFX-Stack-MongoDB
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
@@ -49,15 +49,15 @@ services:
     ports:
       - "${MONGO_DATABASE_PORT}:27017"
     volumes:
-      - ${MONGO_DATA_PATH:-/volume1/Resources/Databases/mongodb}:/data/db
-      - ${MONGO_INIT_PATH:-/volume1/Resources/Databases/mongodb-init}:/docker-entrypoint-initdb.d
+      - ${MONGO_DATA_PATH:-/volume1/NFX-Stack/Databases/mongodb}:/data/db
+      - ${MONGO_INIT_PATH:-/volume1/NFX-Stack/Databases/mongodb-init}:/docker-entrypoint-initdb.d
     networks:
-      - resources
+      - nfx-stack
 
   #! MongoDB UI
   mongodb-ui:
     image: mongo-express:latest
-    container_name: Resources-MongoDB-UI
+    container_name: NFX-Stack-MongoDB-UI
     restart: always
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
@@ -72,12 +72,12 @@ services:
     depends_on:
       - mongodb
     networks:
-      - resources
+      - nfx-stack
 
   #! PostgreSQL 公共数据库
   postgresql:
     image: postgres:15-alpine
-    container_name: Resources-PostgreSQL
+    container_name: NFX-Stack-PostgreSQL
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRESQL_ROOT_USERNAME}
@@ -86,15 +86,15 @@ services:
     ports:
       - "${POSTGRESQL_DATABASE_PORT}:5432"
     volumes:
-      - ${POSTGRESQL_DATA_PATH:-/volume1/Resources/Databases/postgresql}:/var/lib/postgresql/data
-      - ${POSTGRESQL_INIT_PATH:-/volume1/Resources/Databases/postgresql-init}:/docker-entrypoint-initdb.d
+      - ${POSTGRESQL_DATA_PATH:-/volume1/NFX-Stack/Databases/postgresql}:/var/lib/postgresql/data
+      - ${POSTGRESQL_INIT_PATH:-/volume1/NFX-Stack/Databases/postgresql-init}:/docker-entrypoint-initdb.d
     networks:
-      - resources
+      - nfx-stack
 
   #! pgAdmin 管理 PostgreSQL（公共资源）
   postgresql-ui:
     image: dpage/pgadmin4:latest
-    container_name: Resources-PostgreSQL-UI
+    container_name: NFX-Stack-PostgreSQL-UI
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${POSTGRESQL_UI_USERNAME:-admin@admin.com}
@@ -106,12 +106,12 @@ services:
     depends_on:
       - postgresql
     networks:
-      - resources
+      - nfx-stack
 
   #! Redis 公共实例
   redis:
     image: redis:7-alpine
-    container_name: Resources-Redis
+    container_name: NFX-Stack-Redis
     restart: always
     command: >
       redis-server
@@ -127,27 +127,27 @@ services:
     ports:
       - "${REDIS_DATABASE_PORT}:6379"
     volumes:
-      - ${REDIS_DATA_PATH:-/volume1/Resources/Databases/redis}:/data
+      - ${REDIS_DATA_PATH:-/volume1/NFX-Stack/Databases/redis}:/data
     networks:
-      - resources
+      - nfx-stack
 
   #! RedisInsight UI
   redis-ui:
     image: redis/redisinsight:latest
-    container_name: Resources-Redis-UI
+    container_name: NFX-Stack-Redis-UI
     restart: always
     ports:
       - "${REDIS_UI_PORT}:5540"
     depends_on:
       - redis
     networks:
-      - resources
+      - nfx-stack
 
 
   #! 以下是 kafka 的配置
   kafka:
     image: apache/kafka:latest
-    container_name: Resources-Kafka
+    container_name: NFX-Stack-Kafka
     hostname: kafka
     restart: always
     ports:
@@ -176,14 +176,14 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0 # 组初始再平衡延迟（0 表示立即）
       KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
     volumes:
-      - ${KAFKA_DATA_PATH:-/volume1/Resources/Databases/kafka}:/var/lib/kafka/data
+      - ${KAFKA_DATA_PATH:-/volume1/NFX-Stack/Databases/kafka}:/var/lib/kafka/data
     networks:
-      - resources
+      - nfx-stack
 
   #! Kafka UI
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
-    container_name: Resources-Kafka-UI
+    container_name: NFX-Stack-Kafka-UI
     restart: always
     depends_on:
       - kafka
@@ -195,12 +195,12 @@ services:
       KAFKA_CLUSTERS_0_NAME: resources_public
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     networks:
-      - resources
+      - nfx-stack
 
   # #! MinIO
   # minio:
   #   image: minio/minio:RELEASE.2025-04-22T22-12-26Z
-  #   container_name: Resources-MinIO
+  #   container_name: NFX-Stack-MinIO
   #   restart: always
   #   environment:
   #     MINIO_ROOT_USER: ${MINIO_ROOT_USER}
@@ -212,11 +212,11 @@ services:
   #     - "${MINIO_API_PORT}:9000"        # S3 API
   #     - "${MINIO_UI_PORT}:9001"         # Web Console
   #   volumes:
-  #     - ${MINIO_DATA_PATH:-/volume1/Resources/Stores}:/data
+  #     - ${MINIO_DATA_PATH:-/volume1/NFX-Stack/Stores}:/data
   #   networks:
-  #     - resources
+  #     - nfx-stack
 
 networks:
-  resources:
-    name: resources
+  nfx-stack:
+    name: nfx-stack
     driver: bridge
