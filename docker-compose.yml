@@ -1,3 +1,5 @@
+name: nfx-stack
+
 services:
   #! MySQL 公共数据库
   mysql:
