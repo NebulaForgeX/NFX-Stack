@@ -11,7 +11,7 @@ services:
       MYSQL_CHARACTER_SET_SERVER: utf8mb4
       MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
     ports:
-      - "${MYSQL_DATABASE_PORT}:3306"
+      - "${MYSQL_DATABASE_HOST:-0.0.0.0}:${MYSQL_DATABASE_PORT}:3306"
     volumes:
       - ${MYSQL_DATA_PATH:-/volume1/NFX-Stack/Databases/mysql}:/var/lib/mysql
       - ${MYSQL_INIT_PATH:-/volume1/NFX-Stack/Databases/mysql-init}:/docker-entrypoint-initdb.d
@@ -34,7 +34,7 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: "1"
     ports:
-      - "${MYSQL_UI_PORT}:80"
+      - "${MYSQL_UI_HOST:-0.0.0.0}:${MYSQL_UI_PORT}:80"
     depends_on:
       - mysql
     networks:
@@ -49,7 +49,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
     ports:
-      - "${MONGO_DATABASE_PORT}:27017"
+      - "${MONGO_DATABASE_HOST:-0.0.0.0}:${MONGO_DATABASE_PORT}:27017"
     volumes:
       - ${MONGO_DATA_PATH:-/volume1/NFX-Stack/Databases/mongodb}:/data/db
       - ${MONGO_INIT_PATH:-/volume1/NFX-Stack/Databases/mongodb-init}:/docker-entrypoint-initdb.d
@@ -70,7 +70,7 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_UI_USERNAME}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_UI_PASSWORD}
     ports:
-      - "${MONGO_UI_PORT}:8081"
+      - "${MONGO_UI_HOST:-0.0.0.0}:${MONGO_UI_PORT}:8081"
     depends_on:
       - mongodb
     networks:
@@ -86,7 +86,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRESQL_ROOT_PASSWORD}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
     ports:
-      - "${POSTGRESQL_DATABASE_PORT}:5432"
+      - "${POSTGRESQL_DATABASE_HOST:-0.0.0.0}:${POSTGRESQL_DATABASE_PORT}:5432"
     volumes:
       - ${POSTGRESQL_DATA_PATH:-/volume1/NFX-Stack/Databases/postgresql}:/var/lib/postgresql/data
       - ${POSTGRESQL_INIT_PATH:-/volume1/NFX-Stack/Databases/postgresql-init}:/docker-entrypoint-initdb.d
@@ -104,7 +104,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: "False"
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
     ports:
-      - "${POSTGRESQL_UI_PORT}:80"
+      - "${POSTGRESQL_UI_HOST:-0.0.0.0}:${POSTGRESQL_UI_PORT}:80"
     depends_on:
       - postgresql
     networks:
@@ -127,7 +127,7 @@ services:
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
-      - "${REDIS_DATABASE_PORT}:6379"
+      - "${REDIS_DATABASE_HOST:-0.0.0.0}:${REDIS_DATABASE_PORT}:6379"
     volumes:
       - ${REDIS_DATA_PATH:-/volume1/NFX-Stack/Databases/redis}:/data
     networks:
@@ -139,7 +139,7 @@ services:
     container_name: NFX-Stack-Redis-UI
     restart: always
     ports:
-      - "${REDIS_UI_PORT}:5540"
+      - "${REDIS_UI_HOST:-0.0.0.0}:${REDIS_UI_PORT}:5540"
     depends_on:
       - redis
     networks:
@@ -153,7 +153,7 @@ services:
     hostname: kafka
     restart: always
     ports:
-      - "${KAFKA_EXTERNAL_PORT}:9094"   # 例如 10109:9094，只给 LAN
+      - "${KAFKA_EXTERNAL_HOST:-0.0.0.0}:${KAFKA_EXTERNAL_PORT}:9094"   # 例如 192.168.1.64:10109:9094，只给 LAN
     environment:
       KAFKA_NODE_ID: 1 # 节点 ID，KRaft 模式下每个节点需要唯一 ID
       KAFKA_PROCESS_ROLES: broker,controller # 节点角色，这里是单节点，既做 broker（处理消息）又做 controller（集群协调）
@@ -190,7 +190,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - "${KAFKA_UI_PORT}:8080"
+      - "${KAFKA_UI_HOST:-0.0.0.0}:${KAFKA_UI_PORT}:8080"
     environment:
       SERVER_SERVLET_CONTEXT_PATH: /
       DYNAMIC_CONFIG_ENABLED: "true"
@@ -211,8 +211,8 @@ services:
   #     MINIO_BROWSER_REDIRECT_URL: ""   # 防止 UI 跳转奇怪域名（新版本必加）
   #   command: server /data --console-address ":9001"
   #   ports:
-  #     - "${MINIO_API_PORT}:9000"        # S3 API
-  #     - "${MINIO_UI_PORT}:9001"         # Web Console
+  #     - "${MINIO_API_HOST:-0.0.0.0}:${MINIO_API_PORT}:9000"        # S3 API
+  #     - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"         # Web Console
   #   volumes:
   #     - ${MINIO_DATA_PATH:-/volume1/NFX-Stack/Stores}:/data
   #   networks:
