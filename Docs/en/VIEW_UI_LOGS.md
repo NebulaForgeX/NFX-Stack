@@ -97,29 +97,29 @@ sudo docker logs --since "2025-01-20T10:00:00" --until "2025-01-20T11:00:00" NFX
 
 ### Method 2: Using `sudo docker compose logs` Command (Recommended)
 
-Execute in the `/volume1/NFX-Stack` directory:
+Execute in the `/volume1/Resources` directory:
 
 ```bash
-cd /volume1/NFX-Stack
+cd /volume1/Resources
 
 # View logs for all UI services
-sudo docker compose logs mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
+sudo docker compose --env-file .env logs mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
 
 # View logs for a single UI service
-sudo docker compose logs mysql-ui
-sudo docker compose logs mongodb-ui
-sudo docker compose logs postgresql-ui
-sudo docker compose logs redis-ui
-sudo docker compose logs kafka-ui
+sudo docker compose --env-file .env logs mysql-ui
+sudo docker compose --env-file .env logs mongodb-ui
+sudo docker compose --env-file .env logs postgresql-ui
+sudo docker compose --env-file .env logs redis-ui
+sudo docker compose --env-file .env logs kafka-ui
 
 # Real-time tracking for all UI services
-sudo docker compose logs -f mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
+sudo docker compose --env-file .env logs -f mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
 
 # View last 100 lines
-sudo docker compose logs --tail 100 mysql-ui
+sudo docker compose --env-file .env logs --tail 100 mysql-ui
 
 # View logs with timestamps
-sudo docker compose logs -t mysql-ui
+sudo docker compose --env-file .env logs -t mysql-ui
 ```
 
 ### Method 3: View All UI Service Logs (One-Click View)
