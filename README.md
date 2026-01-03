@@ -1,5 +1,7 @@
 # NFX Stack
 
+> ⚠️ **重要提示**：使用本仓库前，请先阅读 [NFX-Policy](https://github.com/NebulaForgeX/NFX-Policy)，了解部署和配置的重要注意事项。
+
 **NFX Stack = NebulaForgeX Resource Stack**
 
 **统一资源与基础设施平台，面向现代开发**
