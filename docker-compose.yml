@@ -13,12 +13,18 @@ services:
     ports:
       - "${MYSQL_DATABASE_HOST:-0.0.0.0}:${MYSQL_DATABASE_PORT}:3306"
     volumes:
-      - ${MYSQL_DATA_PATH:-/volume1/NFX-Stack/Databases/mysql}:/var/lib/mysql
-      - ${MYSQL_INIT_PATH:-/volume1/NFX-Stack/Databases/mysql-init}:/docker-entrypoint-initdb.d
+      - ${MYSQL_DATA_PATH:-/volume1/Resources/Databases/mysql}:/var/lib/mysql
+      - ${MYSQL_INIT_PATH:-/volume1/Resources/Databases/mysql-init}:/docker-entrypoint-initdb.d
+      - ${MYSQL_LOG_PATH:-/volume1/Resources/logs/mysql}:/var/log/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --default-authentication-plugin=mysql_native_password
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -37,6 +43,11 @@ services:
       - "${MYSQL_UI_HOST:-0.0.0.0}:${MYSQL_UI_PORT}:80"
     depends_on:
       - mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -51,8 +62,14 @@ services:
     ports:
       - "${MONGO_DATABASE_HOST:-0.0.0.0}:${MONGO_DATABASE_PORT}:27017"
     volumes:
-      - ${MONGO_DATA_PATH:-/volume1/NFX-Stack/Databases/mongodb}:/data/db
-      - ${MONGO_INIT_PATH:-/volume1/NFX-Stack/Databases/mongodb-init}:/docker-entrypoint-initdb.d
+      - ${MONGO_DATA_PATH:-/volume1/Resources/Databases/mongodb}:/data/db
+      - ${MONGO_INIT_PATH:-/volume1/Resources/Databases/mongodb-init}:/docker-entrypoint-initdb.d
+      - ${MONGO_LOG_PATH:-/volume1/Resources/logs/mongodb}:/var/log/mongodb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -73,6 +90,11 @@ services:
       - "${MONGO_UI_HOST:-0.0.0.0}:${MONGO_UI_PORT}:8081"
     depends_on:
       - mongodb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -88,8 +110,14 @@ services:
     ports:
       - "${POSTGRESQL_DATABASE_HOST:-0.0.0.0}:${POSTGRESQL_DATABASE_PORT}:5432"
     volumes:
-      - ${POSTGRESQL_DATA_PATH:-/volume1/NFX-Stack/Databases/postgresql}:/var/lib/postgresql/data
-      - ${POSTGRESQL_INIT_PATH:-/volume1/NFX-Stack/Databases/postgresql-init}:/docker-entrypoint-initdb.d
+      - ${POSTGRESQL_DATA_PATH:-/volume1/Resources/Databases/postgresql}:/var/lib/postgresql/data
+      - ${POSTGRESQL_INIT_PATH:-/volume1/Resources/Databases/postgresql-init}:/docker-entrypoint-initdb.d
+      - ${POSTGRESQL_LOG_PATH:-/volume1/Resources/logs/postgresql}:/var/log/postgresql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -107,6 +135,11 @@ services:
       - "${POSTGRESQL_UI_HOST:-0.0.0.0}:${POSTGRESQL_UI_PORT}:80"
     depends_on:
       - postgresql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -129,7 +162,13 @@ services:
     ports:
       - "${REDIS_DATABASE_HOST:-0.0.0.0}:${REDIS_DATABASE_PORT}:6379"
     volumes:
-      - ${REDIS_DATA_PATH:-/volume1/NFX-Stack/Databases/redis}:/data
+      - ${REDIS_DATA_PATH:-/volume1/Resources/Databases/redis}:/data
+      - ${REDIS_LOG_PATH:-/volume1/Resources/logs/redis}:/var/log/redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -142,6 +181,11 @@ services:
       - "${REDIS_UI_HOST:-0.0.0.0}:${REDIS_UI_PORT}:5540"
     depends_on:
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -178,7 +222,13 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0 # 组初始再平衡延迟（0 表示立即）
       KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
     volumes:
-      - ${KAFKA_DATA_PATH:-/volume1/NFX-Stack/Databases/kafka}:/var/lib/kafka/data
+      - ${KAFKA_DATA_PATH:-/volume1/Resources/Databases/kafka}:/var/lib/kafka/data
+      - ${KAFKA_LOG_PATH:-/volume1/Resources/logs/kafka}:/var/log/kafka
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
     networks:
       - nfx-stack
 
@@ -196,8 +246,52 @@ services:
       DYNAMIC_CONFIG_ENABLED: "true"
       KAFKA_CLUSTERS_0_NAME: nfx_stack_public
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     networks:
       - nfx-stack
+
+  #! RabbitMQ 消息队列
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: NFX-Stack-RabbitMQ
+    hostname: ${RABBITMQ_HOST_NAME:-rabbitmq}
+    restart: always
+    ports:
+      - "${RABBITMQ_HOST:-0.0.0.0}:${RABBITMQ_AMQP_PORT}:5672"     # AMQP 协议端口
+      - "${RABBITMQ_HOST:-0.0.0.0}:${RABBITMQ_UI_PORT}:15672"     # Management UI 端口
+    environment:
+      # ---- Node identity (对标 Kafka node.id) ----
+      RABBITMQ_NODENAME: ${RABBITMQ_NODE_NAME}
+      RABBITMQ_CLUSTER_NAME: ${RABBITMQ_CLUSTER_NAME}
+      # ---- Auth bootstrap ----
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      # ---- Cluster trust (对标 controller quorum) ----
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+      # 文件日志（配合 /var/log/rabbitmq 挂载）
+      RABBITMQ_LOGS: /var/log/rabbitmq/rabbitmq.log
+      RABBITMQ_SASL_LOGS: /var/log/rabbitmq/rabbitmq-sasl.log
+    volumes:
+      # Data persistence
+      - ${RABBITMQ_DATA_PATH:-/volume1/Resources/Databases/rabbitmq}:/var/lib/rabbitmq
+      - ${RABBITMQ_LOG_PATH:-/volume1/Resources/logs/rabbitmq}:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - nfx-stack
+
 
   # #! MinIO
   # minio:
@@ -214,7 +308,8 @@ services:
   #     - "${MINIO_API_HOST:-0.0.0.0}:${MINIO_API_PORT}:9000"        # S3 API
   #     - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"         # Web Console
   #   volumes:
-  #     - ${MINIO_DATA_PATH:-/volume1/NFX-Stack/Stores}:/data
+  #     - ${MINIO_DATA_PATH:-/volume1/Resources/Stores}:/data
+  #     - ${MINIO_LOG_PATH:-/volume1/Resources/logs/minio}:/var/log/minio
   #   networks:
   #     - nfx-stack
 

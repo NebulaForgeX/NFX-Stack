@@ -4,6 +4,7 @@ Databases/mongodb/
 Databases/postgresql/
 Databases/redis/
 Databases/kafka/
+Databases/rabbitmq/
 
 # 临时文件
 Temp/*
@@ -21,6 +22,10 @@ Stores/*
 # Docker 相关
 .env
 *.log
+
+# 日志目录
+logs/
+Logs/
 
 # IDE
 .vscode/
