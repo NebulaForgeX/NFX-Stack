@@ -15,7 +15,7 @@ services:
     volumes:
       - ${MYSQL_DATA_PATH:-/home/kali/repo/Databases/mysql}:/var/lib/mysql
       - ${MYSQL_INIT_PATH:-/home/kali/repo/Databases/mysql-init}:/docker-entrypoint-initdb.d
-      - ${MYSQL_LOG_PATH:-/home/kali/repo/logs/mysql}:/var/log/mysql
+      - ${MYSQL_LOG_PATH:-/home/kali/repo/Logs/mysql}:/var/log/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -64,7 +64,7 @@ services:
     volumes:
       - ${MONGO_DATA_PATH:-/home/kali/repo/Databases/mongodb}:/data/db
       - ${MONGO_INIT_PATH:-/home/kali/repo/Databases/mongodb-init}:/docker-entrypoint-initdb.d
-      - ${MONGO_LOG_PATH:-/home/kali/repo/logs/mongodb}:/var/log/mongodb
+      - ${MONGO_LOG_PATH:-/home/kali/repo/Logs/mongodb}:/var/log/mongodb
     logging:
       driver: "json-file"
       options:
@@ -112,7 +112,7 @@ services:
     volumes:
       - ${POSTGRESQL_DATA_PATH:-/home/kali/repo/Databases/postgresql}:/var/lib/postgresql/data
       - ${POSTGRESQL_INIT_PATH:-/home/kali/repo/Databases/postgresql-init}:/docker-entrypoint-initdb.d
-      - ${POSTGRESQL_LOG_PATH:-/home/kali/repo/logs/postgresql}:/var/log/postgresql
+      - ${POSTGRESQL_LOG_PATH:-/home/kali/repo/Logs/postgresql}:/var/log/postgresql
     logging:
       driver: "json-file"
       options:
@@ -163,7 +163,7 @@ services:
       - "${REDIS_DATABASE_HOST:-0.0.0.0}:${REDIS_DATABASE_PORT}:6379"
     volumes:
       - ${REDIS_DATA_PATH:-/home/kali/repo/Databases/redis}:/data
-      - ${REDIS_LOG_PATH:-/home/kali/repo/logs/redis}:/var/log/redis
+      - ${REDIS_LOG_PATH:-/home/kali/repo/Logs/redis}:/var/log/redis
     logging:
       driver: "json-file"
       options:
@@ -223,7 +223,7 @@ services:
       KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
     volumes:
       - ${KAFKA_DATA_PATH:-/home/kali/repo/Databases/kafka}:/var/lib/kafka/data
-      - ${KAFKA_LOG_PATH:-/home/kali/repo/logs/kafka}:/var/log/kafka
+      - ${KAFKA_LOG_PATH:-/home/kali/repo/Logs/kafka}:/var/log/kafka
     logging:
       driver: "json-file"
       options:
@@ -278,12 +278,12 @@ services:
     volumes:
       # Data persistence
       - ${RABBITMQ_DATA_PATH:-/home/kali/repo/Databases/rabbitmq}:/var/lib/rabbitmq
-      - ${RABBITMQ_LOG_PATH:-/home/kali/repo/logs/rabbitmq}:/var/log/rabbitmq
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
+      - ${RABBITMQ_LOG_PATH:-/home/kali/repo/Logs/rabbitmq}:/var/log/rabbitmq
+    # healthcheck:
+    #   test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 12
     logging:
       driver: "json-file"
       options:
@@ -309,7 +309,7 @@ services:
   #     - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"         # Web Console
   #   volumes:
   #     - ${MINIO_DATA_PATH:-/home/kali/repo//Stores}:/data
-  #     - ${MINIO_LOG_PATH:-/home/kali/repo/logs/minio}:/var/log/minio
+  #     - ${MINIO_LOG_PATH:-/home/kali/repo/Logs/minio}:/var/log/minio
   #   networks:
   #     - nfx-stack
 

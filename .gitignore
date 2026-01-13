@@ -24,7 +24,7 @@ Stores/*
 *.log
 
 # 日志目录
-logs/
+Logs/
 Logs/
 
 # IDE
