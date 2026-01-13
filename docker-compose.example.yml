@@ -220,10 +220,10 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1 # 事务日志副本数（单节点同样设为 1）
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1 # 事务日志最小 ISR 副本数（单节点同样设为 1）
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0 # 组初始再平衡延迟（0 表示立即）
-      KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
+      # KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
     volumes:
       - ${KAFKA_DATA_PATH:-/home/kali/repo/Databases/kafka}:/var/lib/kafka/data
-      - ${KAFKA_LOG_PATH:-/home/kali/repo/Logs/kafka}:/var/log/kafka
+      # - ${KAFKA_LOG_PATH:-/home/kali/repo/Logs/kafka}:/var/log/kafka
     logging:
       driver: "json-file"
       options:
@@ -273,12 +273,12 @@ services:
       # ---- Cluster trust (对标 controller quorum) ----
       RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
       # 文件日志（配合 /var/log/rabbitmq 挂载）
-      RABBITMQ_LOGS: /var/log/rabbitmq/rabbitmq.log
-      RABBITMQ_SASL_LOGS: /var/log/rabbitmq/rabbitmq-sasl.log
+      # RABBITMQ_LOGS: /var/log/rabbitmq/rabbitmq.log
+      # RABBITMQ_SASL_LOGS: /var/log/rabbitmq/rabbitmq-sasl.log
     volumes:
       # Data persistence
       - ${RABBITMQ_DATA_PATH:-/home/kali/repo/Databases/rabbitmq}:/var/lib/rabbitmq
-      - ${RABBITMQ_LOG_PATH:-/home/kali/repo/Logs/rabbitmq}:/var/log/rabbitmq
+      # - ${RABBITMQ_LOG_PATH:-/home/kali/repo/Logs/rabbitmq}:/var/log/rabbitmq
     # healthcheck:
     #   test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
     #   interval: 10s

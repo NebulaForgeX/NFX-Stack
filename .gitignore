@@ -39,3 +39,4 @@ Logs/
 Thumbs.db
 desktop.ini
 
+.docker-compose.yml
