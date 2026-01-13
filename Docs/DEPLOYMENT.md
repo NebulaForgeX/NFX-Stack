@@ -62,7 +62,7 @@ docker compose version
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 如果项目在 Git 仓库中，可以克隆
 # git clone <repository-url> Resources
@@ -193,7 +193,7 @@ services:
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 停止所有服务（保留数据）
 docker compose --env-file .env stop
@@ -206,7 +206,7 @@ docker compose --env-file .env down
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 重启所有服务
 docker compose --env-file .env restart
@@ -219,7 +219,7 @@ docker compose --env-file .env restart mysql
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 拉取最新镜像
 docker compose --env-file .env pull
@@ -232,7 +232,7 @@ docker compose --env-file .env up -d
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 查看所有服务日志
 docker compose --env-file .env logs -f
@@ -251,7 +251,7 @@ docker compose --env-file .env logs -f -t mysql
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 创建备份目录
 mkdir -p backups/$(date +%Y%m%d)
@@ -278,7 +278,7 @@ tar -czf backups/$(date +%Y%m%d)/kafka-backup.tar.gz Databases/kafka/
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 恢复 MySQL
 docker compose --env-file .env exec -T mysql mysql -u root -p${MYSQL_ROOT_PASSWORD} < backups/YYYYMMDD/mysql-backup.sql
@@ -353,7 +353,7 @@ docker stats
 
 ```bash
 # 进入项目目录
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 停止并删除所有容器和网络（保留数据）
 docker compose --env-file .env down

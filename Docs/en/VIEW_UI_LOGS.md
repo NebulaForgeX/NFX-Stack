@@ -97,10 +97,10 @@ sudo docker logs --since "2025-01-20T10:00:00" --until "2025-01-20T11:00:00" NFX
 
 ### Method 2: Using `sudo docker compose logs` Command (Recommended)
 
-Execute in the `/volume1/Resources` directory:
+Execute in the `/home/kali/repo/` directory:
 
 ```bash
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # View logs for all UI services
 sudo docker compose --env-file .env logs mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui

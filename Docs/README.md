@@ -12,10 +12,10 @@
 
 ```bash
 # 开发环境
-cp /volume1/Resources/Docs/dev.toml /path/to/your/project/configs/dev.toml
+cp /home/kali/repo//Docs/dev.toml /path/to/your/project/configs/dev.toml
 
 # 生产环境
-cp /volume1/Resources/Docs/prod.toml /path/to/your/project/configs/prod.toml
+cp /home/kali/repo//Docs/prod.toml /path/to/your/project/configs/prod.toml
 ```
 
 建议放置位置：

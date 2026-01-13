@@ -101,10 +101,10 @@ docker logs --since "2025-01-20T10:00:00" --until "2025-01-20T11:00:00" NFX-Stac
 
 ### 方法 2：使用 `docker compose logs` 命令（推荐）
 
-在 `/volume1/Resources` 目录下执行：
+在 `/home/kali/repo/` 目录下执行：
 
 ```bash
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 查看所有 UI 服务的日志
 docker compose --env-file .env logs mysql-ui mongodb-ui postgresql-ui redis-ui kafka-ui
@@ -273,7 +273,7 @@ services:
 docker ps --filter "name=NFX-Stack"
 
 # 如果容器未运行，启动服务
-cd /volume1/Resources
+cd /home/kali/repo/
 docker compose --env-file .env up -d
 ```
 

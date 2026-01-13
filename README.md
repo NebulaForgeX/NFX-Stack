@@ -60,7 +60,7 @@ NFX Stack 作为所有 NebulaForgeX 项目的骨干，提供：
 ## 快速开始
 
 ```bash
-cd /volume1/Resources
+cd /home/kali/repo/
 
 # 1. 启动服务
 docker compose --env-file .env up -d

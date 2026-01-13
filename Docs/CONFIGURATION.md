@@ -42,10 +42,10 @@ MYSQL_UI_HOST=0.0.0.0
 MYSQL_UI_PORT=10101
 
 # MySQL 数据目录（默认：/volume1/NFX-Stack/Databases/mysql）
-MYSQL_DATA_PATH=/volume1/Resources/Databases/mysql
+MYSQL_DATA_PATH=/home/kali/repo/Databases/mysql
 
 # MySQL 初始化脚本目录（默认：/volume1/NFX-Stack/Databases/mysql-init）
-MYSQL_INIT_PATH=/volume1/Resources/Databases/mysql-init
+MYSQL_INIT_PATH=/home/kali/repo/Databases/mysql-init
 ```
 
 ### PostgreSQL 配置
@@ -76,10 +76,10 @@ POSTGRESQL_UI_USERNAME=admin@admin.com
 POSTGRESQL_UI_PASSWORD=<YOUR_POSTGRESQL_UI_PASSWORD>
 
 # PostgreSQL 数据目录（默认：/volume1/NFX-Stack/Databases/postgresql）
-POSTGRESQL_DATA_PATH=/volume1/Resources/Databases/postgresql
+POSTGRESQL_DATA_PATH=/home/kali/repo/Databases/postgresql
 
 # PostgreSQL 初始化脚本目录（默认：/volume1/NFX-Stack/Databases/postgresql-init）
-POSTGRESQL_INIT_PATH=/volume1/Resources/Databases/postgresql-init
+POSTGRESQL_INIT_PATH=/home/kali/repo/Databases/postgresql-init
 ```
 
 ### MongoDB 配置
@@ -110,10 +110,10 @@ MONGO_UI_HOST=0.0.0.0
 MONGO_UI_PORT=10111
 
 # MongoDB 数据目录（默认：/volume1/NFX-Stack/Databases/mongodb）
-MONGO_DATA_PATH=/volume1/Resources/Databases/mongodb
+MONGO_DATA_PATH=/home/kali/repo/Databases/mongodb
 
 # MongoDB 初始化脚本目录（默认：/volume1/NFX-Stack/Databases/mongodb-init）
-MONGO_INIT_PATH=/volume1/Resources/Databases/mongodb-init
+MONGO_INIT_PATH=/home/kali/repo/Databases/mongodb-init
 ```
 
 ### Redis 配置
@@ -135,7 +135,7 @@ REDIS_UI_HOST=0.0.0.0
 REDIS_UI_PORT=10121
 
 # Redis 数据目录（默认：/volume1/NFX-Stack/Databases/redis）
-REDIS_DATA_PATH=/volume1/Resources/Databases/redis
+REDIS_DATA_PATH=/home/kali/repo/Databases/redis
 ```
 
 ### Kafka 配置
@@ -157,7 +157,7 @@ KAFKA_UI_HOST=0.0.0.0
 KAFKA_UI_PORT=10131
 
 # Kafka 数据目录（默认：/volume1/NFX-Stack/Databases/kafka）
-KAFKA_DATA_PATH=/volume1/Resources/Databases/kafka
+KAFKA_DATA_PATH=/home/kali/repo/Databases/kafka
 
 # Kafka 内部使用的 IP（用于 ADVERTISED_LISTENERS，通常是宿主机 IP）
 KAFKA_INTERNAL_HOST_IP=192.168.1.64
@@ -185,7 +185,7 @@ MINIO_UI_HOST=0.0.0.0
 MINIO_UI_PORT=10142
 
 # MinIO 数据目录（默认：/volume1/NFX-Stack/Stores）
-MINIO_DATA_PATH=/volume1/Resources/Stores
+MINIO_DATA_PATH=/home/kali/repo//Stores
 ```
 
 ## 端口配置说明
@@ -229,7 +229,7 @@ MINIO_DATA_PATH=/volume1/Resources/Stores
 
 所有数据目录都通过环境变量配置，支持绝对路径和相对路径：
 
-- **绝对路径**：`/volume1/Resources/Databases/mysql`
+- **绝对路径**：`/home/kali/repo/Databases/mysql`
 - **相对路径**：`./Databases/mysql`（相对于 docker-compose.yml 所在目录）
 
 ### 权限要求

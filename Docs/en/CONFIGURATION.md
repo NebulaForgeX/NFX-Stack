@@ -42,10 +42,10 @@ MYSQL_UI_HOST=0.0.0.0
 MYSQL_UI_PORT=10101
 
 # MySQL data directory
-MYSQL_DATA_PATH=/volume1/Resources/Databases/mysql
+MYSQL_DATA_PATH=/home/kali/repo/Databases/mysql
 
 # MySQL initialization script directory
-MYSQL_INIT_PATH=/volume1/Resources/Databases/mysql-init
+MYSQL_INIT_PATH=/home/kali/repo/Databases/mysql-init
 ```
 
 ### PostgreSQL Configuration
@@ -76,10 +76,10 @@ POSTGRESQL_UI_USERNAME=admin@admin.com
 POSTGRESQL_UI_PASSWORD=<YOUR_POSTGRESQL_UI_PASSWORD>
 
 # PostgreSQL data directory
-POSTGRESQL_DATA_PATH=/volume1/Resources/Databases/postgresql
+POSTGRESQL_DATA_PATH=/home/kali/repo/Databases/postgresql
 
 # PostgreSQL initialization script directory
-POSTGRESQL_INIT_PATH=/volume1/Resources/Databases/postgresql-init
+POSTGRESQL_INIT_PATH=/home/kali/repo/Databases/postgresql-init
 ```
 
 ### MongoDB Configuration
@@ -110,10 +110,10 @@ MONGO_UI_HOST=0.0.0.0
 MONGO_UI_PORT=10111
 
 # MongoDB data directory
-MONGO_DATA_PATH=/volume1/Resources/Databases/mongodb
+MONGO_DATA_PATH=/home/kali/repo/Databases/mongodb
 
 # MongoDB initialization script directory
-MONGO_INIT_PATH=/volume1/Resources/Databases/mongodb-init
+MONGO_INIT_PATH=/home/kali/repo/Databases/mongodb-init
 ```
 
 ### Redis Configuration
@@ -135,7 +135,7 @@ REDIS_UI_HOST=0.0.0.0
 REDIS_UI_PORT=10121
 
 # Redis data directory
-REDIS_DATA_PATH=/volume1/Resources/Databases/redis
+REDIS_DATA_PATH=/home/kali/repo/Databases/redis
 ```
 
 ### Kafka Configuration
@@ -157,7 +157,7 @@ KAFKA_UI_HOST=0.0.0.0
 KAFKA_UI_PORT=10131
 
 # Kafka data directory
-KAFKA_DATA_PATH=/volume1/Resources/Databases/kafka
+KAFKA_DATA_PATH=/home/kali/repo/Databases/kafka
 ```
 
 ### MinIO Configuration (Optional)
@@ -182,7 +182,7 @@ MINIO_UI_HOST=0.0.0.0
 MINIO_UI_PORT=10142
 
 # MinIO data directory
-MINIO_DATA_PATH=/volume1/Resources/Stores
+MINIO_DATA_PATH=/home/kali/repo//Stores
 ```
 
 ## Port Configuration
@@ -226,7 +226,7 @@ If default ports are already in use, modify the corresponding port configuration
 
 All data directories are configured through environment variables, supporting absolute and relative paths:
 
-- **Absolute path**: `/volume1/Resources/Databases/mysql`
+- **Absolute path**: `/home/kali/repo/Databases/mysql`
 - **Relative path**: `./Databases/mysql` (relative to docker-compose.yml directory)
 
 ### Permission Requirements
