@@ -3,7 +3,7 @@ name: nfx-stack
 services:
   #! MySQL 公共数据库
   mysql:
-    image: mysql:8.0
+    image: mysql:latest
     container_name: NFX-Stack-MySQL
     restart: always
     environment:
@@ -13,13 +13,14 @@ services:
     ports:
       - "${MYSQL_DATABASE_HOST:-0.0.0.0}:${MYSQL_DATABASE_PORT}:3306"
     volumes:
-      - ${MYSQL_DATA_PATH:-/home/kali/repo/Databases/mysql}:/var/lib/mysql
-      - ${MYSQL_INIT_PATH:-/home/kali/repo/Databases/mysql-init}:/docker-entrypoint-initdb.d
-      - ${MYSQL_LOG_PATH:-/home/kali/repo/Logs/mysql}:/var/log/mysql
+      - ${MYSQL_DATA_PATH:-./Databases/mysql}:/var/lib/mysql
+      - ${MYSQL_INIT_PATH:-./Databases/mysql-init}:/docker-entrypoint-initdb.d
+      - ${MYSQL_LOG_PATH:-./Logs/mysql}:/var/log/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-      - --default-authentication-plugin=mysql_native_password
+      # MySQL 8.4+ 已移除此选项；若用 mysql:8 可取消下一行注释
+      # - --default-authentication-plugin=mysql_native_password
     logging:
       driver: "json-file"
       options:
@@ -52,6 +53,7 @@ services:
       - nfx-stack
 
   #! MongoDB 公共实例
+  # MongoDB 5.0+ 需要 CPU 支持 AVX；无 AVX 请使用 4.4
   mongodb:
     image: mongo:4.4
     container_name: NFX-Stack-MongoDB
@@ -62,9 +64,9 @@ services:
     ports:
       - "${MONGO_DATABASE_HOST:-0.0.0.0}:${MONGO_DATABASE_PORT}:27017"
     volumes:
-      - ${MONGO_DATA_PATH:-/home/kali/repo/Databases/mongodb}:/data/db
-      - ${MONGO_INIT_PATH:-/home/kali/repo/Databases/mongodb-init}:/docker-entrypoint-initdb.d
-      - ${MONGO_LOG_PATH:-/home/kali/repo/Logs/mongodb}:/var/log/mongodb
+      - ${MONGO_DATA_PATH:-./Databases/mongodb}:/data/db
+      - ${MONGO_INIT_PATH:-./Databases/mongodb-init}:/docker-entrypoint-initdb.d
+      - ${MONGO_LOG_PATH:-./Logs/mongodb}:/var/log/mongodb
     logging:
       driver: "json-file"
       options:
@@ -100,7 +102,7 @@ services:
 
   #! PostgreSQL 公共数据库
   postgresql:
-    image: postgres:15-alpine
+    image: postgres:latest
     container_name: NFX-Stack-PostgreSQL
     restart: always
     environment:
@@ -110,9 +112,10 @@ services:
     ports:
       - "${POSTGRESQL_DATABASE_HOST:-0.0.0.0}:${POSTGRESQL_DATABASE_PORT}:5432"
     volumes:
-      - ${POSTGRESQL_DATA_PATH:-/home/kali/repo/Databases/postgresql}:/var/lib/postgresql/data
-      - ${POSTGRESQL_INIT_PATH:-/home/kali/repo/Databases/postgresql-init}:/docker-entrypoint-initdb.d
-      - ${POSTGRESQL_LOG_PATH:-/home/kali/repo/Logs/postgresql}:/var/log/postgresql
+      # PostgreSQL 18+ 需挂载到 /var/lib/postgresql（数据在版本子目录内）
+      - ${POSTGRESQL_DATA_PATH:-./Databases/postgresql}:/var/lib/postgresql
+      - ${POSTGRESQL_INIT_PATH:-./Databases/postgresql-init}:/docker-entrypoint-initdb.d
+      - ${POSTGRESQL_LOG_PATH:-./Logs/postgresql}:/var/log/postgresql
     logging:
       driver: "json-file"
       options:
@@ -145,7 +148,7 @@ services:
 
   #! Redis 公共实例
   redis:
-    image: redis:7-alpine
+    image: redis:latest
     container_name: NFX-Stack-Redis
     restart: always
     command: >
@@ -162,8 +165,8 @@ services:
     ports:
       - "${REDIS_DATABASE_HOST:-0.0.0.0}:${REDIS_DATABASE_PORT}:6379"
     volumes:
-      - ${REDIS_DATA_PATH:-/home/kali/repo/Databases/redis}:/data
-      - ${REDIS_LOG_PATH:-/home/kali/repo/Logs/redis}:/var/log/redis
+      - ${REDIS_DATA_PATH:-./Databases/redis}:/data
+      - ${REDIS_LOG_PATH:-./Logs/redis}:/var/log/redis
     logging:
       driver: "json-file"
       options:
@@ -222,7 +225,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0 # 组初始再平衡延迟（0 表示立即）
       # KAFKA_LOG_DIRS: /var/lib/kafka/data # 日志目录
     volumes:
-      - ${KAFKA_DATA_PATH:-/home/kali/repo/Databases/kafka}:/var/lib/kafka/data
+      - ${KAFKA_DATA_PATH:-./Databases/kafka}:/var/lib/kafka/data
       # - ${KAFKA_LOG_PATH:-/home/kali/repo/Logs/kafka}:/var/log/kafka
     logging:
       driver: "json-file"
@@ -256,7 +259,7 @@ services:
 
   #! RabbitMQ 消息队列
   rabbitmq:
-    image: rabbitmq:3.13-management
+    image: rabbitmq:latest
     container_name: NFX-Stack-RabbitMQ
     hostname: ${RABBITMQ_HOST_NAME:-rabbitmq}
     restart: always
@@ -272,13 +275,14 @@ services:
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
       # ---- Cluster trust (对标 controller quorum) ----
       RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
-      # 文件日志（配合 /var/log/rabbitmq 挂载）
-      # RABBITMQ_LOGS: /var/log/rabbitmq/rabbitmq.log
-      # RABBITMQ_SASL_LOGS: /var/log/rabbitmq/rabbitmq-sasl.log
+      # 文件日志（拆到宿主机，配合下方 /var/log/rabbitmq 挂载）
+      RABBITMQ_LOGS: /var/log/rabbitmq/rabbitmq.log
+      RABBITMQ_SASL_LOGS: /var/log/rabbitmq/rabbitmq-sasl.log
     volumes:
       # Data persistence
-      - ${RABBITMQ_DATA_PATH:-/home/kali/repo/Databases/rabbitmq}:/var/lib/rabbitmq
-      # - ${RABBITMQ_LOG_PATH:-/home/kali/repo/Logs/rabbitmq}:/var/log/rabbitmq
+      - ${RABBITMQ_DATA_PATH:-./Databases/rabbitmq}:/var/lib/rabbitmq
+      # 日志拆出到宿主机（.env 中 RABBITMQ_LOG_PATH）
+      - ${RABBITMQ_LOG_PATH:-./Logs/rabbitmq}:/var/log/rabbitmq
     # healthcheck:
     #   test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
     #   interval: 10s
@@ -308,8 +312,8 @@ services:
   #     - "${MINIO_API_HOST:-0.0.0.0}:${MINIO_API_PORT}:9000"        # S3 API
   #     - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"         # Web Console
   #   volumes:
-  #     - ${MINIO_DATA_PATH:-/home/kali/repo//Stores}:/data
-  #     - ${MINIO_LOG_PATH:-/home/kali/repo/Logs/minio}:/var/log/minio
+  #     - ${MINIO_DATA_PATH:-./Stores}:/data
+  #     - ${MINIO_LOG_PATH:-./Logs/minio}:/var/log/minio
   #   networks:
   #     - nfx-stack
 
