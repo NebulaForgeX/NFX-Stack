@@ -259,7 +259,7 @@ services:
 
   #! RabbitMQ 消息队列
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:management
     container_name: NFX-Stack-RabbitMQ
     hostname: ${RABBITMQ_HOST_NAME:-rabbitmq}
     restart: always
