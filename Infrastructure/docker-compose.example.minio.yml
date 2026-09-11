@@ -1,0 +1,42 @@
+# MinIO AIStor 对象存储（模板）
+# 官方当前镜像：quay.io/minio/aistor/minio:latest
+# 客户端请使用 path-style（AWS SDK forcePathStyle=true）
+
+name: nfx-stack-minio
+
+services:
+  minio:
+    image: quay.io/minio/aistor/minio:latest
+    container_name: NFX-Stack-MinIO
+    hostname: minio
+    restart: always
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_SERVER_URL: ${MINIO_SERVER_URL}
+      MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL}
+    ports:
+      - "${MINIO_API_HOST:-0.0.0.0}:${MINIO_API_PORT}:9000"
+      - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"
+    volumes:
+      - ${MINIO_DATA_PATH:-../Stores}:/data
+      - ${MINIO_LOG_PATH:-../Logs/minio}:/var/log/minio
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - nfx-stack
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack

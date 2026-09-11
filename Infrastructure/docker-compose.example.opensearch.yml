@@ -1,0 +1,69 @@
+# OpenSearch 单节点 + Dashboards（模板）
+# 复制为 docker-compose.opensearch.yml 后配合根目录 .env 使用
+
+name: nfx-stack-opensearch
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "10"
+
+services:
+  opensearch:
+    image: opensearchproject/opensearch:3.8.0
+    container_name: NFX-Stack-OpenSearch
+    hostname: opensearch
+    environment:
+      discovery.type: single-node
+      node.name: nfx-stack-opensearch
+      cluster.name: nfx-stack-opensearch
+      bootstrap.memory_lock: "false"
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: "${OPENSEARCH_PASSWORD:?OPENSEARCH_PASSWORD is required}"
+      OPENSEARCH_JAVA_OPTS: "${OPENSEARCH_JAVA_OPTS:?OPENSEARCH_JAVA_OPTS is required}"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "${OPENSEARCH_HOST:-0.0.0.0}:${OPENSEARCH_EXTERNAL_PORT:?OPENSEARCH_EXTERNAL_PORT is required}:9200"
+    volumes:
+      # 镜像用户 uid 1000；host 目录须 chown 1000:1000（./start.sh 会处理）
+      - ${OPENSEARCH_DATA_PATH:-../Databases/opensearch}:/usr/share/opensearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl -ksf -u "admin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" https://localhost:9200/_cluster/health >/dev/null 2>&1 || exit 1',
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:3.8.0
+    container_name: NFX-Stack-OpenSearch-Dashboards
+    volumes:
+      - ./config/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml:ro
+    ports:
+      - "${OPENSEARCH_DASHBOARDS_HOST:-0.0.0.0}:${OPENSEARCH_DASHBOARDS_PORT:?OPENSEARCH_DASHBOARDS_PORT is required}:5601"
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack

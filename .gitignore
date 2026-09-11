@@ -1,31 +1,21 @@
-# 数据库数据文件
-Databases/mysql/
-Databases/mongodb/
-Databases/postgresql/
-Databases/redis/
-Databases/kafka/
-Databases/rabbitmq/
+# 数据卷 / 对象存储：全部忽略（含 grafana、prometheus、loki、opensearch）
+/Databases/
+/Stores/
 
-# 临时文件
-Temp/*
+# Infrastructure：只提交 example 模板；本机复制出的 compose 不提交
+/Infrastructure/docker-compose.*.yml
+!/Infrastructure/docker-compose.example.*.yml
 
-# 私有文件
-Private/files/*
-Private/images/*
-
-# 存储文件
-Stores/*
-
-# 共享文件（根据需求调整）
-# Shared/*
-
-# Docker 相关
+# 本机环境
 .env
 *.log
 
-# 日志目录
-Logs/
-Logs/
+# 日志
+/Logs/
+
+# 临时 / 私有
+/Temp/
+/Private/
 
 # IDE
 .vscode/
@@ -38,5 +28,3 @@ Logs/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-docker-compose.yml

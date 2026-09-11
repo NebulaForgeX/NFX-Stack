@@ -1,0 +1,116 @@
+# OpenTelemetry 可观测性栈（模板）
+# 复制为 docker-compose.otel.yml 后配合根目录 .env 使用
+
+name: nfx-stack-otel
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "10"
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.160.0
+    container_name: NFX-Stack-Otel-Collector
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    env_file:
+      - ../.env
+    volumes:
+      - ./config/otel-collector.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "${OTEL_COLLECTOR_OTLP_GRPC_HOST:-0.0.0.0}:${OTEL_COLLECTOR_OTLP_GRPC_PORT}:4317"
+      - "${OTEL_COLLECTOR_OTLP_HTTP_HOST:-0.0.0.0}:${OTEL_COLLECTOR_OTLP_HTTP_PORT}:4318"
+      - "${OTEL_COLLECTOR_HEALTH_HOST:-0.0.0.0}:${OTEL_COLLECTOR_HEALTH_PORT}:13133"
+      - "${OTEL_COLLECTOR_PROMETHEUS_HOST:-0.0.0.0}:${OTEL_COLLECTOR_PROMETHEUS_PORT}:8889"
+    mem_limit: 256m
+    cpus: 0.5
+    depends_on:
+      - jaeger
+      - loki
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+  jaeger:
+    image: jaegertracing/jaeger:2.20.0
+    container_name: NFX-Stack-Jaeger
+    env_file:
+      - ../.env
+    ports:
+      - "${OTEL_JAEGER_UI_HOST:-0.0.0.0}:${OTEL_JAEGER_UI_PORT}:16686"
+    mem_limit: 512m
+    cpus: 0.5
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:v3.14.0
+    container_name: NFX-Stack-Prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      # 镜像用户 uid 65534；host 目录须 chown 65534:65534（./start.sh 会处理）
+      - ${PROMETHEUS_DATA_PATH:-../Databases/prometheus}:/prometheus
+    ports:
+      - "${OTEL_PROMETHEUS_HOST:-0.0.0.0}:${OTEL_PROMETHEUS_PORT}:9090"
+    mem_limit: 256m
+    cpus: 0.5
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+  loki:
+    image: grafana/loki:3.7.7
+    container_name: NFX-Stack-Loki
+    command: ["-config.file=/etc/loki/config.yaml"]
+    volumes:
+      - ./config/loki.yaml:/etc/loki/config.yaml:ro
+      # 镜像用户 uid 10001；host 目录须 chown 10001:10001（./start.sh 会处理）
+      - ${LOKI_DATA_PATH:-../Databases/loki}:/loki
+    ports:
+      - "${OTEL_LOKI_HOST:-0.0.0.0}:${OTEL_LOKI_PORT}:3100"
+    mem_limit: 256m
+    cpus: 0.5
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+  grafana:
+    image: grafana/grafana:13.2.1
+    container_name: NFX-Stack-Grafana
+    env_file:
+      - ../.env
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
+      # 镜像用户 uid 472；host 目录须 chown 472:472（./start.sh 会处理）
+      - ${GRAFANA_DATA_PATH:-../Databases/grafana}:/var/lib/grafana
+    ports:
+      - "${OTEL_GRAFANA_HOST:-0.0.0.0}:${OTEL_GRAFANA_PORT}:3000"
+    depends_on:
+      - prometheus
+      - loki
+      - jaeger
+    mem_limit: 256m
+    cpus: 0.5
+    logging: *default-logging
+    networks:
+      - nfx-stack
+    restart: always
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack

@@ -1,0 +1,53 @@
+# MongoDB + mongo-express（模板）
+# MongoDB 5.0+ 需要 CPU 支持 AVX；无 AVX 请使用 4.4
+
+name: nfx-stack-mongodb
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "10"
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: NFX-Stack-MongoDB
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    ports:
+      - "${MONGO_DATABASE_HOST:-0.0.0.0}:${MONGO_DATABASE_PORT}:27017"
+    volumes:
+      - ${MONGO_DATA_PATH:-../Databases/mongodb}:/data/db
+      - ${MONGO_INIT_PATH:-../Databases/mongodb-init}:/docker-entrypoint-initdb.d
+      - ${MONGO_LOG_PATH:-../Logs/mongodb}:/var/log/mongodb
+    logging: *default-logging
+    networks:
+      - nfx-stack
+
+  mongodb-ui:
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: NFX-Stack-MongoDB-UI
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_SITE_BASEURL: /
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_UI_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_UI_PASSWORD}
+    ports:
+      - "${MONGO_UI_HOST:-0.0.0.0}:${MONGO_UI_PORT}:8081"
+    depends_on:
+      - mongodb
+    logging: *default-logging
+    networks:
+      - nfx-stack
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack

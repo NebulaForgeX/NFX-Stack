@@ -1,0 +1,51 @@
+# Redis + RedisInsight（模板）
+
+name: nfx-stack-redis
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "10"
+
+services:
+  redis:
+    image: redis:8.8.2
+    container_name: NFX-Stack-Redis
+    restart: always
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --save "60 1000"
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --protected-mode no
+      --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - "${REDIS_DATABASE_HOST:-0.0.0.0}:${REDIS_DATABASE_PORT}:6379"
+    volumes:
+      - ${REDIS_DATA_PATH:-../Databases/redis}:/data
+      - ${REDIS_LOG_PATH:-../Logs/redis}:/var/log/redis
+    logging: *default-logging
+    networks:
+      - nfx-stack
+
+  redis-ui:
+    image: redis/redisinsight:3.8.0
+    container_name: NFX-Stack-Redis-UI
+    restart: always
+    ports:
+      - "${REDIS_UI_HOST:-0.0.0.0}:${REDIS_UI_PORT}:5540"
+    depends_on:
+      - redis
+    logging: *default-logging
+    networks:
+      - nfx-stack
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack

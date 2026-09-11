@@ -1,0 +1,31 @@
+{
+  "client": {
+    "token": {
+      "hmac_secret_key": "nfx-stack-client-secret-change-me"
+    },
+    "allowed_origins": ["*"]
+  },
+  "channel": {
+    "namespaces": [
+      {
+        "name": "profile",
+        "allow_subscribe_for_client": true
+      },
+      {
+        "name": "conversation",
+        "allow_subscribe_for_client": true
+      }
+    ]
+  },
+  "http_api": {
+    "key": "nfx-stack-api-key-change-me"
+  },
+  "sse": {
+    "enabled": true
+  },
+  "admin": {
+    "enabled": true,
+    "password": "admin",
+    "secret": "Lucas127."
+  }
+}

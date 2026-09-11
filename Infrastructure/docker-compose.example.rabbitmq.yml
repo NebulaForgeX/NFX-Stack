@@ -1,0 +1,33 @@
+# RabbitMQ（含 Management UI）（模板）
+
+name: nfx-stack-rabbitmq
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.3.5-management
+    container_name: NFX-Stack-RabbitMQ
+    hostname: ${RABBITMQ_HOST_NAME:-rabbitmq}
+    restart: always
+    ports:
+      - "${RABBITMQ_HOST:-0.0.0.0}:${RABBITMQ_AMQP_PORT}:5672"
+      - "${RABBITMQ_HOST:-0.0.0.0}:${RABBITMQ_UI_PORT}:15672"
+    environment:
+      RABBITMQ_NODENAME: ${RABBITMQ_NODE_NAME}
+      RABBITMQ_CLUSTER_NAME: ${RABBITMQ_CLUSTER_NAME}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+    volumes:
+      - ${RABBITMQ_DATA_PATH:-../Databases/rabbitmq}:/var/lib/rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - nfx-stack
+
+networks:
+  nfx-stack:
+    external: true
+    name: nfx-stack
