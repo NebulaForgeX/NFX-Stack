@@ -34,17 +34,17 @@ Example LAN bind `192.168.1.64`:
 
 | Service | Data/API | UI |
 |---------|----------|-----|
-| MySQL | 10101 | 10102 |
-| MongoDB | 10103 | 10104 |
-| PostgreSQL | 10105 | 10106 |
-| Redis | 10181 | 10182 |
-| Kafka | 10183 | 10184 |
-| RabbitMQ | 10185 | 10186 |
-| MinIO | 10187 | 10188 |
-| Centrifugo | 10189 | admin on same port |
-| Jaeger / OTLP gRPC / HTTP | 10192 / 10193 / 10194 | health 10195 |
-| Prometheus / Loki / Grafana | 10197 / 10198 / 10199 | exporter 10196 |
-| OpenSearch | 10200 HTTPS | 10201 Dashboards HTTP |
+| MySQL | 10100 | 10101 |
+| MongoDB | 10102 | 10103 |
+| PostgreSQL | 10104 | 10105 |
+| Redis | 10106 | 10107 |
+| Kafka | 10108 | 10109 |
+| RabbitMQ | 10110 | 10111 |
+| MinIO | 10112 | 10113 |
+| Centrifugo | 10114 | admin on same port |
+| Jaeger / OTLP gRPC / HTTP | 10115 / 10116 / 10117 | health 10118 |
+| Prometheus / Loki / Grafana | 10120 / 10121 / 10122 | exporter 10119 |
+| OpenSearch | 10123 HTTPS | 10124 Dashboards HTTP |
 
 Restrict these ports to trusted networks.
 

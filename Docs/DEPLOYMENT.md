@@ -34,18 +34,18 @@ docker compose --project-directory Infrastructure --env-file .env \
 
 | 服务 | 数据/API | UI |
 |------|----------|-----|
-| MySQL | 10101 | 10102 phpMyAdmin |
-| MongoDB | 10103 | 10104 |
-| PostgreSQL | 10105 | 10106 pgAdmin |
-| Redis | 10181 | 10182 RedisInsight |
-| Kafka | 10183 | 10184 |
-| RabbitMQ AMQP | 10185 | 10186 Management |
-| MinIO S3 | 10187 | 10188 Console |
-| Centrifugo | 10189 | 同端口 Admin |
-| Jaeger | — | 10192 |
-| OTLP gRPC / HTTP | 10193 / 10194 | Collector health 10195 |
-| Prometheus exporter / Prometheus / Loki | 10196 / 10197 / 10198 | Grafana 10199 |
-| OpenSearch | 10200 HTTPS | 10201 Dashboards HTTP |
+| MySQL | 10100 | 10101 phpMyAdmin |
+| MongoDB | 10102 | 10103 |
+| PostgreSQL | 10104 | 10105 pgAdmin |
+| Redis | 10106 | 10107 RedisInsight |
+| Kafka | 10108 | 10109 |
+| RabbitMQ AMQP | 10110 | 10111 Management |
+| MinIO S3 | 10112 | 10113 Console |
+| Centrifugo | 10114 | 同端口 Admin |
+| Jaeger | — | 10115 |
+| OTLP gRPC / HTTP | 10116 / 10117 | Collector health 10118 |
+| Prometheus exporter / Prometheus / Loki | 10119 / 10120 / 10121 | Grafana 10122 |
+| OpenSearch | 10123 HTTPS | 10124 Dashboards HTTP |
 
 防火墙只对受信网段开放这些端口。
 
