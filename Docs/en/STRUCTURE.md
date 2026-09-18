@@ -47,3 +47,5 @@ App containers on that network can use `mysql:3306`, `postgresql:5432`, `mongodb
 
 HTTP/HTTPS edge routing lives in **NFX-Edge**, not this repo.
 
+Data paths come from `*_DATA_PATH` in `.env`. Defaults live under `Databases/` and `Logs/`.
+
