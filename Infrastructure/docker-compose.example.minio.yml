@@ -20,7 +20,7 @@ services:
       - "${MINIO_API_HOST:-0.0.0.0}:${MINIO_API_PORT}:9000"
       - "${MINIO_UI_HOST:-0.0.0.0}:${MINIO_UI_PORT}:9001"
     volumes:
-      - ${MINIO_DATA_PATH:-../Stores}:/data
+      - ${MINIO_DATA_PATH:-../Databases/minio}:/data
       - ${MINIO_LOG_PATH:-../Logs/minio}:/var/log/minio
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]

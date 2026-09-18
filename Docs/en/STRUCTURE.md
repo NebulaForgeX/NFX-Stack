@@ -19,7 +19,6 @@ NFX-Stack/
 │   └── config/
 ├── Databases/
 ├── Logs/
-├── Stores/
 └── Docs/
 ```
 

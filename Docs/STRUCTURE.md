@@ -17,9 +17,8 @@ NFX-Stack/
 │   ├── docker-compose.<name>.yml
 │   ├── docker-compose.example.<name>.yml
 │   └── config/                   # Centrifugo / OTEL / Grafana / OpenSearch
-├── Databases/                    # 数据卷（mysql、postgresql、mongodb、redis、kafka、rabbitmq、prometheus、loki、grafana、opensearch）
+├── Databases/                    # 数据卷（mysql、postgresql、mongodb、redis、kafka、rabbitmq、minio、prometheus、loki、grafana、opensearch）
 ├── Logs/
-├── Stores/                       # MinIO 对象数据
 └── Docs/
 ```
 
@@ -53,4 +52,4 @@ HTTP/HTTPS 入口在 **NFX-Edge**（`NFX-Edge-Reverse-Proxy`），不在本仓�
 
 ## 数据持久化
 
-路径由 `.env` 的 `*_DATA_PATH` 指定，默认在仓库 `Databases/`、`Stores/`、`Logs/`。
+路径由 `.env` 的 `*_DATA_PATH` 指定，默认在仓库 `Databases/`、`Logs/`。

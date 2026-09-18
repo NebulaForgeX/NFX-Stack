@@ -64,7 +64,7 @@ cp .example.env .env
 |------|------|
 | `MYSQL_DATA_PATH` / `MYSQL_INIT_PATH` / `MYSQL_LOG_PATH` | MySQL 数据 / init / 日志 |
 | `MONGO_*` / `POSTGRESQL_*` / `REDIS_*` / `KAFKA_*` / `RABBITMQ_*` | 对应引擎 |
-| `MINIO_DATA_PATH` | 对象存储（`Stores/`） |
+| `MINIO_DATA_PATH` | 对象存储（`Databases/minio`） |
 | `PROMETHEUS_DATA_PATH` / `LOKI_DATA_PATH` / `GRAFANA_DATA_PATH` | 观测数据 |
 | `OPENSEARCH_DATA_PATH` | OpenSearch 索引 |
 

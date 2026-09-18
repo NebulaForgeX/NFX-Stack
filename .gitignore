@@ -1,6 +1,5 @@
-# 数据卷 / 对象存储：全部忽略（含 grafana、prometheus、loki、opensearch）
+# 数据卷：全部忽略（含 grafana、prometheus、loki、opensearch、minio）
 /Databases/
-/Stores/
 
 # Infrastructure：只提交 example 模板；本机复制出的 compose 不提交
 /Infrastructure/docker-compose.*.yml
