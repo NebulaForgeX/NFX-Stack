@@ -53,7 +53,7 @@ Frontends should use `CENTRIFUGO_PUBLIC_WS_URL` / `CENTRIFUGO_PUBLIC_SSE_URL`.
 
 ## MinIO
 
-Image is **MinIO AIStor** (`quay.io/minio/aistor/minio:latest`). Clients must use path-style. A Free/SUBNET license can be mounted for production (see compose comments).
+Image is **MinIO Community** (`quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z`, last official pre-built). Clients must use path-style.
 
 HTTP/HTTPS edge routing is **NFX-Edge**. Do not run Traefik inside this stack.
 

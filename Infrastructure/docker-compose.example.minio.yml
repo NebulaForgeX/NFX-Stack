@@ -1,12 +1,14 @@
-# MinIO AIStor 对象存储（模板）
-# 官方当前镜像：quay.io/minio/aistor/minio:latest
+# MinIO Community 对象存储（模板）
+# 最后一版官方预编译镜像（之后社区只出源码；Docker Hub 已下架，用 Quay）
+# quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
 # 客户端请使用 path-style（AWS SDK forcePathStyle=true）
+# 从 AIStor 换过来若 /data 格式不兼容，清空 MINIO_DATA_PATH 再起。
 
 name: nfx-stack-minio
 
 services:
   minio:
-    image: quay.io/minio/aistor/minio:latest
+    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
     container_name: NFX-Stack-MinIO
     hostname: minio
     restart: always
@@ -22,8 +24,12 @@ services:
     volumes:
       - ${MINIO_DATA_PATH:-../Databases/minio}:/data
       - ${MINIO_LOG_PATH:-../Logs/minio}:/var/log/minio
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/ready"]
       interval: 30s
       timeout: 10s
       retries: 5

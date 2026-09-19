@@ -35,7 +35,7 @@ cp .example.env .env
 | Redis | `docker-compose.redis.yml` | `NFX-Stack-Redis` / UI | `redis:8.8.2` / `redisinsight:3.8.0` |
 | Kafka | `docker-compose.kafka.yml` | `NFX-Stack-Kafka` / UI | `apache/kafka:4.3.1` |
 | RabbitMQ | `docker-compose.rabbitmq.yml` | `NFX-Stack-RabbitMQ` | `rabbitmq:4.3.5-management` |
-| MinIO AIStor | `docker-compose.minio.yml` | `NFX-Stack-MinIO` | `quay.io/minio/aistor/minio:latest` |
+| MinIO Community | `docker-compose.minio.yml` | `NFX-Stack-MinIO` | `quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z` |
 | Centrifugo | `docker-compose.centrifugo.yml` | `NFX-Stack-Centrifugo` | `v6.9.4` |
 | OTEL | `docker-compose.otel.yml` | Collector / Jaeger / Prometheus / Loki / Grafana | 见 Docs/STRUCTURE |
 | OpenSearch | `docker-compose.opensearch.yml` | OpenSearch / Dashboards | `3.8.0` |

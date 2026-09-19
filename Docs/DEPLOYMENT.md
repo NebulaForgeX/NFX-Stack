@@ -66,4 +66,4 @@ OpenSearch 的 `OPENSEARCH_PASSWORD` **仅首次初始化数据目录时生效**
 - Mongo 起不来：确认镜像仍是 `mongo:4.4`
 - OpenSearch 起不来：密码须过 zxcvbn；数据目录须对 uid 1000 可写（`./start.sh` 会 `chown`）；堆内存见 `OPENSEARCH_JAVA_OPTS`
 - Grafana / Prometheus / Loki 一直 Restarting：数据目录被 `sudo docker` 建成 `root:root`，镜像内非 root 写不进去。`./start.sh` 会分别 `chown` 472 / 65534 / 10001
-- MinIO `unhealthy`：AIStor 无 license 时 S3 会被拒绝，healthcheck `mc ready local` 失败；容器本身通常仍在跑
+- MinIO 起不来 / 数据目录报错：从 AIStor 换成社区版后若 `/data` 格式不兼容，清空 `MINIO_DATA_PATH` 再 `./start.sh`

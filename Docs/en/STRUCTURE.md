@@ -32,7 +32,7 @@ NFX-Stack/
 | `docker-compose.redis.yml` | redis, redis-ui | `redis:8.8.2`, `redis/redisinsight:3.8.0` |
 | `docker-compose.kafka.yml` | kafka, kafka-ui | `apache/kafka:4.3.1`, `provectuslabs/kafka-ui:v0.7.2` |
 | `docker-compose.rabbitmq.yml` | rabbitmq | `rabbitmq:4.3.5-management` |
-| `docker-compose.minio.yml` | minio | `quay.io/minio/aistor/minio:latest` |
+| `docker-compose.minio.yml` | minio | `quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z` |
 | `docker-compose.centrifugo.yml` | centrifugo | `centrifugo/centrifugo:v6.9.4` |
 | `docker-compose.otel.yml` | collector, jaeger, prometheus, loki, grafana | `0.160.0` / `2.20.0` / `v3.14.0` / `3.7.7` / `13.2.1` |
 | `docker-compose.opensearch.yml` | opensearch, dashboards | `3.8.0` |

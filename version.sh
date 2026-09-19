@@ -38,6 +38,6 @@ echo "=============================================="
 echo "  本机已拉取的 NFX-Stack 相关镜像"
 echo "=============================================="
 $DOCKER images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}" \
-  mysql mongo postgres redis rabbitmq phpmyadmin mongo-express dpage/pgadmin4 redis/redisinsight apache/kafka provectuslabs/kafka-ui centrifugo/centrifugo otel/opentelemetry-collector-contrib jaegertracing/jaeger prom/prometheus grafana/loki grafana/grafana opensearchproject/opensearch quay.io/minio/aistor/minio 2>/dev/null || true
+  mysql mongo postgres redis rabbitmq phpmyadmin mongo-express dpage/pgadmin4 redis/redisinsight apache/kafka provectuslabs/kafka-ui centrifugo/centrifugo otel/opentelemetry-collector-contrib jaegertracing/jaeger prom/prometheus grafana/loki grafana/grafana opensearchproject/opensearch quay.io/minio/minio 2>/dev/null || true
 echo ""
 echo "完成。"

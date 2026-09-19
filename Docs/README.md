@@ -71,6 +71,6 @@ tls_verify = false
 
 ## MinIO
 
-当前镜像是 **MinIO AIStor**（`quay.io/minio/aistor/minio:latest`）。客户端必须 path-style。生产可挂 Free/SUBNET 许可证（见 compose 注释）。
+当前镜像是 **MinIO Community**（`quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z`，最后一版官方预编译）。客户端必须 path-style。
 
 HTTP/HTTPS 边缘路由使用 **NFX-Edge**，不要在 Stack 里再起 Traefik。

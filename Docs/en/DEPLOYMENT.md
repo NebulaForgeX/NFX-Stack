@@ -64,4 +64,4 @@ Restrict these ports to trusted networks.
 - Mongo will not start: keep `mongo:4.4`
 - OpenSearch: password must pass zxcvbn; data dir must be writable by uid 1000 (`./start.sh` chowns it); heap via `OPENSEARCH_JAVA_OPTS`
 - Grafana / Prometheus / Loki stuck Restarting: bind dirs created as `root:root` by `sudo docker` are not writable by the image user. `./start.sh` chowns them to 472 / 65534 / 10001
-- MinIO `unhealthy`: AIStor without a license denies S3, so `mc ready local` fails; the container is usually still running
+- MinIO will not start / data dir errors: after switching from AIStor, wipe `MINIO_DATA_PATH` if the on-disk format is incompatible, then `./start.sh`
