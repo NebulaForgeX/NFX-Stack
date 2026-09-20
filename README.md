@@ -1,6 +1,7 @@
 # NFX Stack
 
-> ⚠️ Read [NFX-Policy](https://github.com/NebulaForgeX/NFX-Policy) before deploying.
+> 部署、网络、配置与安全的详细说明见 [NFX-Documentation](https://github.com/NebulaForgeX/NFX-Documentation)（[第三章：NFX-Stack](https://github.com/NebulaForgeX/NFX-Documentation/blob/New-Arch/books/zh/chapter-03-nfx-stack-deployment.md)）。
+> Deploy, network, config, and security: [NFX-Documentation](https://github.com/NebulaForgeX/NFX-Documentation) ([Chapter 3: NFX-Stack](https://github.com/NebulaForgeX/NFX-Documentation/blob/New-Arch/books/en/chapter-03-nfx-stack-deployment.md)).
 
 **NFX Stack = NebulaForgeX Resource Stack**
 
@@ -8,8 +9,6 @@
 
 <div align="center">
   <img src="image.png" alt="NFX Stack Logo" width="200">
-
-  [English](Docs/en/README.md) | [配置](Docs/README.md) | [部署](Docs/DEPLOYMENT.md) | [结构](Docs/STRUCTURE.md)
 </div>
 
 ## 快速开始
@@ -37,10 +36,10 @@ cp .example.env .env
 | RabbitMQ | `docker-compose.rabbitmq.yml` | `NFX-Stack-RabbitMQ` | `rabbitmq:4.3.5-management` |
 | MinIO Community | `docker-compose.minio.yml` | `NFX-Stack-MinIO` | `quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z` |
 | Centrifugo | `docker-compose.centrifugo.yml` | `NFX-Stack-Centrifugo` | `v6.9.4` |
-| OTEL | `docker-compose.otel.yml` | Collector / Jaeger / Prometheus / Loki / Grafana | 见 Docs/STRUCTURE |
+| OTEL | `docker-compose.otel.yml` | Collector / Jaeger / Prometheus / Loki / Grafana | 见 Documentation 第三章 |
 | OpenSearch | `docker-compose.opensearch.yml` | OpenSearch / Dashboards | `3.8.0` |
 
-端口以 `.env` 为准。当前 NAS 示例见 [部署指南](Docs/DEPLOYMENT.md)。
+端口以 `.env` 为准。NAS 部署示例见 [第三章：NFX-Stack](https://github.com/NebulaForgeX/NFX-Documentation/blob/New-Arch/books/zh/chapter-03-nfx-stack-deployment.md)。
 
 ## 管理 UI
 
@@ -50,7 +49,6 @@ cp .example.env .env
 | pgAdmin | `http://<ip>:${POSTGRESQL_UI_PORT}` |
 | Grafana | `http://<ip>:${OTEL_GRAFANA_PORT}` |
 | MinIO Console | `http://<ip>:${MINIO_UI_PORT}` |
-| 完整列表 | [VIEW_UI_LOGS](Docs/VIEW_UI_LOGS.md) |
 
 ## 容器内连接
 
@@ -67,13 +65,5 @@ https://opensearch:9200
 ```
 
 MinIO 客户端必须 path-style。HTTP/HTTPS 入口在 **NFX-Edge**，本仓库不跑 Traefik。
-
-## 文档
-
-- [配置 / 接入](Docs/README.md)
-- [项目结构](Docs/STRUCTURE.md)
-- [部署](Docs/DEPLOYMENT.md)
-- [配置变量](Docs/CONFIGURATION.md)
-- [文档索引](Docs/INDEX.md)
 
 **开发者**：Lucas Lyu · lyulucas2003@gmail.com
