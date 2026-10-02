@@ -24,10 +24,3 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-    networks:
-      - nfx-stack
-
-networks:
-  nfx-stack:
-    external: true
-    name: nfx-stack

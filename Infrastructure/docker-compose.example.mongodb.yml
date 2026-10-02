@@ -24,8 +24,6 @@ services:
       - ${MONGO_INIT_PATH:-../Databases/mongodb-init}:/docker-entrypoint-initdb.d
       - ${MONGO_LOG_PATH:-../Logs/mongodb}:/var/log/mongodb
     logging: *default-logging
-    networks:
-      - nfx-stack
 
   mongodb-ui:
     image: mongo-express:1.0.2-20-alpine3.19
@@ -44,10 +42,3 @@ services:
     depends_on:
       - mongodb
     logging: *default-logging
-    networks:
-      - nfx-stack
-
-networks:
-  nfx-stack:
-    external: true
-    name: nfx-stack

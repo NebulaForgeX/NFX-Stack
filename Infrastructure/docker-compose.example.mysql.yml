@@ -28,8 +28,6 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     logging: *default-logging
-    networks:
-      - nfx-stack
 
   mysql-ui:
     image: phpmyadmin:5.2.3
@@ -46,10 +44,3 @@ services:
     depends_on:
       - mysql
     logging: *default-logging
-    networks:
-      - nfx-stack
-
-networks:
-  nfx-stack:
-    external: true
-    name: nfx-stack

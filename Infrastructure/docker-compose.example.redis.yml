@@ -30,8 +30,6 @@ services:
       - ${REDIS_DATA_PATH:-../Databases/redis}:/data
       - ${REDIS_LOG_PATH:-../Logs/redis}:/var/log/redis
     logging: *default-logging
-    networks:
-      - nfx-stack
 
   redis-ui:
     image: redis/redisinsight:3.8.0
@@ -42,10 +40,3 @@ services:
     depends_on:
       - redis
     logging: *default-logging
-    networks:
-      - nfx-stack
-
-networks:
-  nfx-stack:
-    external: true
-    name: nfx-stack

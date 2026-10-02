@@ -107,13 +107,6 @@ ensure_data_dirs() {
   ensure_bind_dir OpenSearch 1000 1000 "$(env_path OPENSEARCH_DATA_PATH "${ROOT}/Databases/opensearch")"
 }
 
-ensure_network() {
-  if ! ${DOCKER} network inspect nfx-stack >/dev/null 2>&1; then
-    echo "creating docker network: nfx-stack"
-    ${DOCKER} network create nfx-stack >/dev/null
-  fi
-}
-
 run_compose() {
   local file="$1"
   shift
@@ -127,7 +120,6 @@ run_compose() {
 
 case "${ACTION}" in
   up|start)
-    ensure_network
     ensure_data_dirs
     for file in "${compose_files[@]}"; do
       run_compose "${file}" up -d

@@ -38,8 +38,6 @@ services:
       options:
         max-size: "50m"
         max-file: "10"
-    networks:
-      - nfx-stack
 
   kafka-ui:
     image: provectuslabs/kafka-ui:v0.7.2
@@ -55,10 +53,3 @@ services:
       KAFKA_CLUSTERS_0_NAME: nfx_stack_public
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     logging: *default-logging
-    networks:
-      - nfx-stack
-
-networks:
-  nfx-stack:
-    external: true
-    name: nfx-stack
